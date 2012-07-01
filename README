@@ -1,0 +1,6 @@
+A re-implementation of the 'gmask' program but in javascript using HTML5.
+Source: http://homepage3.nifty.com/furumizo/gmaskd_e.htm
+(MaskSrc.LZH)
+
+The c files have been coppied for convience into the masksrc dir.
+
