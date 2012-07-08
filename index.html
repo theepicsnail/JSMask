@@ -1,12 +1,28 @@
 <!doctype html>
 <html>
   <head>
+  <link href="test.css" rel="stylesheet" type="text/css">
+  <script src="mekorand.js"></script>
   <script src="test.js"></script>
   </head>
   <body onload="onload()" id="body">
     <input type="file" id="files" name="file" />
+    <input type="button" onclick="save()" value="Save"/>(Opens image in new window, right click->Save As)
     <br/>
-    <canvas width=500 height=500 id="canvas"></canvas>
-    <img id="tmp"/>
+    <input type="button" onclick="reset()" value="Reset"/>
+    <br/>
+    <input type="button" onclick="invert()" value="invert"/>
+    <input type="button" onclick="rgb()" value="rgb"/>
+    <input type="button" onclick="xor()" value="xor"/>
+    <input type="button" onclick="vglass()" value="vglass"/>
+    <input type="button" onclick="hglass()" value="hglass"/>
+    <input type="button" onclick="win()" value="win"/>
+    <input type="button" onclick="meko(false)" value="meko +"/>
+    <input type="button" onclick="meko(true)" value="meko -"/>
+    <input type="button" onclick="fl()" value="fl"/>
+    <input type="button" onclick="Q0()" value="Q0"/>
+    <input type="button" onclick="CP()" value="CP"/>
+    <br/>
+    <canvas id="canvas"></canvas>
   </body>
 </html>

@@ -9,7 +9,9 @@
 
 <input type="file" id="files" name="files[]" multiple />
 <output id="list"></output>
-
+<div style="overflow:scroll; width:100%; height:100%;">
+    <canvas id="canvas"></canvas>
+</div>
 <script>
   function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
@@ -30,8 +32,21 @@
           // Render thumbnail.
           var span = document.createElement('span');
           span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                            '" title="', escape(theFile.name), '"/>'].join('');
+                            '" id="tmp" title="', escape(theFile.name), '"/>'].join('');
           document.getElementById('list').insertBefore(span, null);
+ 
+          var canvas = document.getElementById('canvas');
+          var context = canvas.getContext('2d');
+          var image = new Image()
+          image.onload = function(){
+            console.log("Image loaded.")
+            console.log(image.width)
+            canvas.width=image.width;
+            canvas.height=image.height;
+            context.drawImage(image,0,0)
+          }
+          image.src = e.target.result;
+        
         };
       })(f);
 

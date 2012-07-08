@@ -928,7 +928,7 @@ function genPerm(count){
     nums = []
     for(var i = 0 ; i < count ; i++)
         nums.push([mekoRand[i],i])
-    nums.sort()
+    nums.sort(function(a,b){return a[0]-b[0]})
     res = []
     for(var i = 0; i < count ; i++)
         res.push(nums[i][1])
@@ -941,14 +941,3 @@ function inverse(perm){
     return out
 }
 
-
-
-console.log(mekoRand.length)
-
-perm = genPerm(10)
-
-console.log(perm)
-
-iperm = inverse(perm)
-
-console.log(iperm)
