@@ -1,0 +1,74 @@
+body {
+  background: url('background.png');
+  background-repeat: repeat;
+}
+#menu {
+  position: absolute;
+  width: 100%;
+  height: 28px;
+}
+#workspace {
+  position: absolute;
+  width: 100%;
+  top: 30px;
+  bottom: 32px;
+  //overflow: scroll;
+}
+#footer {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  bottom: 0px;
+}
+
+canvas {
+  border: 1px solid black;
+  position: absolute;
+}
+
+button {
+  background-image: url('menu.png');
+  width: 30px;
+  height: 30px;
+  margin: auto;
+}
+
+#load_disk_btn { background-position-x: 0px; }
+#load_cloud_btn { background-position-x: -28px; }
+#save_btn { background-position-x: -56px; }
+#undo_btn { background-position-x: -84px; }
+#redo_btn { background-position-x: -112px; }
+#zoom_in_btn { background-position-x: -140px; }
+#zoom_out_btn { background-position-x: -168px; }
+
+#move_up_btn { 
+  background-position-x: -196px; 
+  height:14px;
+}
+#move_down_btn { 
+  background-position-x: -196px; 
+  background-position-y: -14px; 
+  height:14px;
+}
+#move_left_btn { 
+  background-position-x: -224px; 
+  width:14px;
+}
+#move_right_btn { 
+  background-position-x: -238px; 
+  width:14px;
+}
+
+#rgb_btn { background-position-x: -252px; }
+#xor_btn { background-position-x: -280px; }
+#vflip_btn { background-position-x: -308px; }
+#hflip_btn { background-position-x: -336px; }
+#neg_btn { background-position-x: -364px; }
+#vwin_btn { background-position-x: -392px; }
+#hwin_btn { background-position-x: -420px; }
+#win_btn { background-position-x: -448px; }
+#m_minus_btn { background-position-x: -476px; }
+#m_plus_btn { background-position-x: -504px; }
+#fl_btn { background-position-x: -532px; }
+#q0_btn { background-position-x: -560px; }
+#cp_btn { background-position-x: -588px; }
