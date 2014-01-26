@@ -7,6 +7,8 @@ define(["utils/load-image", "jquery", "canvas"], function(loadImage, $, canvas){
     if (!url) {
       return;
     }
+    //God i hate cors. Thank you corsproxy.com!
+    url = "http://www.corsproxy.com/" + url.replace("http://", "");
     loadImage(url, $.proxy(canvas.setImage, canvas));
   }
 

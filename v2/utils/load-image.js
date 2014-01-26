@@ -23,6 +23,7 @@
                 url,
                 oUrl;
             img.onerror = callback;
+            img.crossOrigin = '';
             img.onload = function () {
                 if (oUrl && !(options && options.noRevoke)) {
                     loadImage.revokeObjectURL(oUrl);
