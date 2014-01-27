@@ -13,13 +13,14 @@ define(["mekorand", "canvas"], function(meko, canvas){
     for(rowId = 0 ; rowId < cells.length ; rowId ++) {
       for(colId = 0 ; colId < columns ; colId ++, i++) {
         
-        var cell = cells[rowId][colId];
         
         var j = perm[i];
         var permR = j/columns >> 0;
         var permC = j%columns; 
+        
+        var cell = cells[permR][permC];
         canvas.display.ctx.putImageData(cell, 
-            x + 16 * permC, y + 16 * permR);
+            x + 16 * colId, y + 16 * rowId);
       }
     }
   }
