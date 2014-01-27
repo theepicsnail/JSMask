@@ -147,6 +147,22 @@ define(["jquery", "utils/canvas-relCoords", "utils/canvas-toBlob"], function($) 
     console.log(sel, this.display);
     return this.display.ctx.getImageData(sel[0], sel[1], sel[2], sel[3]);
   };
+  Canvas.prototype.getSelectionCells = function(cell_width, cell_height) {
+    var X = this.overlay.selection[0];
+    var Y = this.overlay.selection[1];
+    var W = this.overlay.selection[2];
+    var H = this.overlay.selection[3];
+    var dx, dy;
+    var out = [], tmp;
+    for(dy = 0 ; dy + cell_width <= H ; dy += cell_height) {
+      tmp = [];
+      for(dx = 0 ; dx + cell_width <= W ; dx += cell_width) {  
+        tmp.push(this.display.ctx.getImageData(X + dx, Y + dy, cell_width, cell_height));
+      }
+      out.push(tmp);
+    }
+    return out;
+  };
 
   return new Canvas();
 });
