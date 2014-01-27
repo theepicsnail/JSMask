@@ -3,6 +3,8 @@ var BUTTONS = [
 'file_open',
 'cloud_open',
 'file_save',
+'meko_plus',
+'meko_minus',
 ];
 /*
     'buttons/cp', 'buttons/file_open', 'buttons/file_save', 'buttons/fl', 
