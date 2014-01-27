@@ -164,5 +164,10 @@ define(["jquery", "utils/canvas-relCoords", "utils/canvas-toBlob"], function($) 
     return out;
   };
 
+  Canvas.prototype.asImage = function () {
+    var img = new Image();
+    img.src = this.display.canvas.toDataURL("image/png");
+    return img;
+  };
   return new Canvas();
 });
