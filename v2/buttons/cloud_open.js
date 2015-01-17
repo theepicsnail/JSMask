@@ -4,12 +4,14 @@ define(["utils/load-image", "jquery", "canvas"], function(loadImage, $, canvas){
   }
 
   function load(url) {
+    console.log("load:", url);
     if (!url) {
       return;
     }
     //God i hate cors. Thank you corsproxy.com!
     url = "http://www.corsproxy.com/" + url.replace("http://", "");
-    loadImage(url, $.proxy(canvas.setImage, canvas));
+    console.log("Calling load image");
+    loadImage(url, $.proxy(canvas.setImage, canvas), {'crossOrigin':''});
   }
 
   // Auto load any url passed in after the # in the url

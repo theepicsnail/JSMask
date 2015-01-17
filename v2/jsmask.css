@@ -1,6 +1,7 @@
 body {
   background: url('background.png');
   background-repeat: repeat;
+  cursor: 'default';
 }
 #menu {
   position: absolute;
@@ -12,7 +13,7 @@ body {
   width: 100%;
   top: 30px;
   bottom: 32px;
-  //overflow: scroll;
+  overflow: auto;
 }
 #footer {
   position: absolute;

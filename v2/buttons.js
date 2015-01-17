@@ -3,8 +3,16 @@ var BUTTONS = [
 'file_open',
 'cloud_open',
 'file_save',
+'neg',
+'move_left',
+'move_down',
+'move_up',
+'move_right',
+'vflip',
+'hflip',
 'meko_plus',
 'meko_minus',
+'fl',
 ];
 /*
     'buttons/cp', 'buttons/file_open', 'buttons/file_save', 'buttons/fl', 

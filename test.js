@@ -223,6 +223,9 @@ function win(){
     putSelectionData(imgData);
    
 }
+function hflip(){
+    var imgData = getSelectionData(16);
+}
 function meko(inv){
     var grid  = getSelectionDataGrid(16);
     var perm = genPerm(grid.length);
@@ -408,8 +411,8 @@ function CP(){
 //}}}
 // UI stuff {{{
 function pos(ev){
-    var x = ev.clientX - canvas.offsetLeft + (gridSize>>1);
-    var y = ev.clientY - canvas.offsetTop + (gridSize>>1);
+    var x = ev.offsetX  + (gridSize>>1);
+    var y = ev.offsetY  + (gridSize>>1);
     x-=x%gridSize
     y-=y%gridSize
     return {'x':x, 'y':y}

@@ -1,4 +1,16 @@
 define(["jquery", "utils/canvas-relCoords", "utils/canvas-toBlob"], function($) {
+  function Point(x,y) {
+    this.x = x|0;
+    this.y = y|0;
+  }
+
+  function Rect(x,y,w,h) {
+    this.x = x|0;
+    this.y = y|0;
+    this.w = w|0;
+    this.h = h|0;
+  }
+
   function CanvasBase() {
     this.canvas = $("<canvas>")[0];
     this.ctx = this.canvas.getContext('2d');
@@ -11,71 +23,57 @@ define(["jquery", "utils/canvas-relCoords", "utils/canvas-toBlob"], function($) 
     this.canvas.height = dim.height;
   };
 
-
+  
   function Overlay() {
     CanvasBase.call(this);
-    this.selection = [-1,-1,-1,-1];
+    this.p0 = new Point(0, 0); 
+    this.p1 = new Point(0, 0);
+    this.rect = new Rect(0,0,0,0);
+
+    //this.selection = [-1,-1,-1,-1];
     this.mousedown = false;
     this.canvas.onmousedown = $.proxy(function(e){ 
       this.mousedown = true;
       this.startSelection(this.canvas.relMouseCoords(e));
     },this);
+    
     this.canvas.onmousemove = $.proxy(function(e){
       if(!this.mousedown) {
         return;
       }
       this.continueSelection(this.canvas.relMouseCoords(e));
     }, this);
+    
     this.canvas.onmouseup = $.proxy(function(e) {
       this.endSelection(e);
       this.mousedown = false;
     }, this);
   }
+
   Overlay.prototype = new CanvasBase();
   Overlay.prototype.constructor = Overlay;
 
-  Overlay.prototype.reset = function() {
-    this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
-  };
   Overlay.prototype.startSelection = function(evt) {
-    this.reset();
-    this.selection[0]=evt.x>>3<<3;
-    this.selection[1]=evt.y>>3<<3;
+    this.p0.x = (evt.x+4)>>3<<3;
+    this.p0.y = (evt.y+4)>>3<<3;
+    this.p1.x = this.p0.x;
+    this.p1.y = this.p0.y;
+    this.updateSelection();
   };
   Overlay.prototype.continueSelection = function(evt) {
-    this.selection[2] = evt.x>>3<<3;
-    this.selection[3] = evt.y>>3<<3;
+    this.p1.x = (evt.x+4)>>3<<3;
+    this.p1.y = (evt.y+4)>>3<<3;
     this.updateSelection();
   };
   Overlay.prototype.endSelection = function(evt) {
-    var X = this.selection[0], 
-        Y = this.selection[1],
-        X2= this.selection[2],
-        Y2= this.selection[3], W,H;
-    if (X>X2) {
-      W = X-X2;
-      X = X2;
-    } else {
-      W = X2-X;
-    }
-    if (Y>Y2) {
-      H = Y-Y2;
-      Y = Y2;
-    } else {
-      H = Y2 - Y;
-    }
-    this.selection[0] = X;
-    this.selection[1] = Y;
-    this.selection[2] = W;
-    this.selection[3] = H;
+    this.updateSelection();
   };
 
   Overlay.prototype.updateSelection = function() {
-    this.reset();
-    var X = this.selection[0], 
-        Y = this.selection[1],
-        X2= this.selection[2],
-        Y2= this.selection[3], W,H;
+    var X = this.p0.x, 
+        Y = this.p0.y,
+        X2= this.p1.x,
+        Y2= this.p1.y, W,H;
     if (X>X2) {
       W = X-X2;
       X = X2;
@@ -88,10 +86,24 @@ define(["jquery", "utils/canvas-relCoords", "utils/canvas-toBlob"], function($) 
     } else {
       H = Y2 - Y;
     }
+    this.rect.x = X;
+    this.rect.y = Y;
+    this.rect.w = W;
+    this.rect.h = H;
+    this.redraw();
+  };
+
+  Overlay.prototype.redraw = function() {
+    this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+ 
+    var X = this.rect.x;
+    var Y = this.rect.y;
+    var W = this.rect.w;
+    var H = this.rect.h;
+    
     // Fix aliasing, by centering the edges on pixels 
     this.ctx.strokeRect(X-0.5, Y-0.5, W+1, H+1);
 
-    //
     this.ctx.beginPath();
     for (X2 = 16; X2 < W ; X2 += 16) {
       this.ctx.moveTo(X + X2, Y);
@@ -143,15 +155,15 @@ define(["jquery", "utils/canvas-relCoords", "utils/canvas-toBlob"], function($) 
   };
 
   Canvas.prototype.getSelection = function() {
-    var sel = this.overlay.selection;
+    var sel = this.overlay.rect;
     console.log(sel, this.display);
-    return this.display.ctx.getImageData(sel[0], sel[1], sel[2], sel[3]);
+    return this.display.ctx.getImageData(sel.x, sel.y, sel.w, sel.h);
   };
   Canvas.prototype.getSelectionCells = function(cell_width, cell_height) {
-    var X = this.overlay.selection[0];
-    var Y = this.overlay.selection[1];
-    var W = this.overlay.selection[2];
-    var H = this.overlay.selection[3];
+    var X = this.overlay.rect.x;
+    var Y = this.overlay.rect.y;
+    var W = this.overlay.rect.w;
+    var H = this.overlay.rect.h;
     var dx, dy;
     var out = [], tmp;
     for(dy = 0 ; dy + cell_width <= H ; dy += cell_height) {

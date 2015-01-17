@@ -4,8 +4,8 @@ define(["mekorand", "canvas"], function(meko, canvas){
     var cells = canvas.getSelectionCells(16, 16);
     var perm = meko.genPerm(cells.length * cells[0].length);
     
-    var x = canvas.overlay.selection[0];
-    var y = canvas.overlay.selection[1];
+    var x = canvas.overlay.rect.x;
+    var y = canvas.overlay.rect.y;
 
     var columns = cells[0].length;
 

@@ -24,7 +24,9 @@
                 oUrl;
             img.onerror = callback;
             img.crossOrigin = '';
+            //img.crossorigin = '';
             img.onload = function () {
+                console.log("onload called", oUrl, options, callback);
                 if (oUrl && !(options && options.noRevoke)) {
                     loadImage.revokeObjectURL(oUrl);
                 }
@@ -32,6 +34,7 @@
                     callback(loadImage.scale(img, options));
                 }
             };
+            console.log(typeof file, file, options);
             if (loadImage.isInstanceOf('Blob', file) ||
                     // Files are also Blob instances, but some browsers
                     // (Firefox 3.6) support the File API but not Blobs:
@@ -41,13 +44,16 @@
                 img._type = file.type;
             } else if (typeof file === 'string') {
                 url = file;
-                if (options && options.crossOrigin) {
-                    img.crossOrigin = options.crossOrigin;
+                if (options && options.hasOwnProperty("crossOrigin")) {
+                    console.log("Reset cross origin:", options);
+//                    img.crossOrigin = options.crossOrigin;
                 }
             } else {
                 return false;
             }
             if (url) {
+                console.log("Loading started.", url);
+                console.trace();
                 img.src = url;
                 return img;
             }
